@@ -1,189 +1,149 @@
 #include <stdio.h>
-#include <vector>
-using namespace std;
+#include <algorithm>
 
-#define NMAX 11000
-#define HMAX 15
+#define N 11000
+#define H 15
 
-vector<int> next_adj, start, adj, cost, tree_size, max_size_child, lhd, max_edge_to_lhd_root, parent_edge, begin_no, end_no, parent;
-int parent_lca[NMAX][HMAX];
-vector<pair<pair<int, int>, pair<int, int> > >edge;
-vector<bool> mark;
-int root(1), n;
+int adj[N], gstart[N], gnext[N << 1], costs[N];
+int par[N][H], depth[N], low_end[N], subt_size[N];
+int lhd_root[H], schild_ind[N], lhd_cnt, lhd_no[N];
+int segt_size, segt[N * 5], seg_val[N], segt_ind[N];
+int n;
 
-void add_edge(int a, int b, int c){
-  adj.push_back(b);
-  next_adj[adj.size() - 1] = start[a];
-  start[a] = adj.size() - 1;
-  cost[adj.size() - 1] = c;
-}
-
-int get_tree_size(int x, int cnt){
-  cnt++;
-  begin_no[x] = cnt;
-  tree_size[x] = 1;
-  mark[x] = true;
-  max_size_child[x] = -1;
-  for(int i = start[x]; i != -1; i = next_adj[i])
-  if (!mark[adj[i]]){
-    parent_edge[adj[i]] = i;
-    parent[adj[i]] = x;
-    cnt = get_tree_size(adj[i], cnt);
-    tree_size[x] += tree_size[adj[i]];
-    if (max_size_child[x] == -1 || tree_size[adj[i]] > tree_size[max_size_child[x]])
-      max_size_child[x] = adj[i];
+void dfs(int cur, int prev, int d){
+  subt_size[cur] = 1;
+  depth[cur] = d;
+  schild_ind[cur] = -1;
+  for(int i = gstart[cur]; i + 1; i = gnext[i]){
+    int child = adj[i];
+    if (child != prev){
+      low_end[i >> 1] = child;
+      par[child][0] = cur;
+      dfs(child, cur, d + 1);
+      subt_size[cur] += subt_size[child];
+      if (schild_ind[cur] == -1 || subt_size[child] > subt_size[adj[schild_ind[cur]]])
+        schild_ind[cur] = i;
+    }
   }
-  cnt++;
-  end_no[x] = cnt;
-  return cnt;
 }
 
-void get_lhd(int root, int x) {
-  mark[x] = true;
-  lhd[x] = root;
-  for(int i = start[x]; i + 1; i = next_adj[i])
-    if (!mark[adj[i]]) {
-      if (adj[i] == max_size_child[x]){
-        max_edge_to_lhd_root[adj[i]] = max(max_edge_to_lhd_root[x], cost[i]);
-        get_lhd(root, adj[i]);
+int lca(int u, int v){
+  if (depth[u] < depth[v]) std::swap(u, v);
+  int diff = depth[u] - depth[v];
+  for(int i = 0; i < H; i++)
+    if ((diff >> i) & 1) u = par[u][i];
+  if (u == v) return u;
+  for(int i = H - 1; i >= 0; i--)
+    if (par[u][i] != par[v][i]){
+      u = par[u][i];
+      v = par[v][i];
+    }
+  return par[u][0];
+}
+
+void lhd(int cur){
+  if (lhd_root[lhd_cnt] == -1)
+    lhd_root[lhd_cnt] = cur;
+  if (schild_ind[cur] + 1){
+    segt_ind[cur] = segt_size;
+    seg_val[segt_size++] = costs[schild_ind[cur] >> 1];
+    lhd_no[adj[schild_ind[cur]]] = lhd_cnt;
+    lhd(adj[schild_ind[cur]]);
+  }
+  for(int i = gstart[cur]; i + 1; i = gnext[i])
+    if (schild_ind[cur] != i) {
+      int child = adj[i];
+      if (child != par[cur][0]) {
+        lhd_cnt++;
+        segt_ind[child] = segt_size;
+        seg_val[segt_size++] = costs[i >> 1];
+        lhd_no[child] = lhd_cnt;
+        lhd(child);
       }
-      else{
-        max_edge_to_lhd_root[adj[i]] = 0;
-        get_lhd(adj[i], adj[i]);
-      }
     }
 }
 
-void build_hld(){
-  //build tree size
-  tree_size = vector<int>(n + 1);
-  begin_no = vector<int>(n + 1);
-  end_no = vector<int>(n + 1);
-  parent_edge = vector<int>(n + 1);
-  parent = vector<int>(n + 1);
-  max_size_child = vector<int>(n + 1);
-  mark = vector<bool>(n + 1, false);
-  get_tree_size(root, 0);
-
-  //build lhd
-  mark = vector<bool>(n + 1, false);
-  lhd = vector<int>(n + 1);
-  max_edge_to_lhd_root = vector<int>(n + 1, 0);
-  get_lhd(root, root);
+int make_segt(int ind, int l, int h){
+  if (l == h) return segt[ind] = seg_val[l];
+  if (l > h) return 0;
+  int m = (l + h) >> 1;
+  return segt[ind] = std::max(make_segt(ind << 1, l, m), make_segt((ind << 1) & 1, m + 1, h));
 }
 
-void update_lhd(int x){
-  for(int i = start[x]; i + 1; i = next_adj[i]) {
-    if (adj[i] == max_size_child[x]) {
-      max_edge_to_lhd_root[adj[i]] = max(max_edge_to_lhd_root[x], cost[i]);
-      update_lhd(adj[i]);
-      break;
-    }
-  }
+int query_segt(int ind, int l, int h, int ql, int qh){
+  if (qh < l || ql > h) return 0;
+  if (ql <= l && h <= qh) return segt[ind];
+  int m = (l + h) >> 1;
+  return std::max(query_segt(ind << 1, l, m, ql, qh), query_segt((ind << 1) & 1, m + 1, h, ql, qh));
 }
 
-bool is_ascentor(int ascentor, int descender) {
-  return begin_no[ascentor] <= begin_no[descender] && end_no[descender] <= end_no[ascentor];
+int upd_segt(int ind, int l, int h, int i, int v){
+  if (l > h) return 0;
+  if (i < l || i > h) return segt[ind];
+  if (l == h) return segt[ind] = v;
+  int m = (l + h) >> 1;
+  return segt[ind] = std::max(upd_segt(ind << 1, l, m, i, v), upd_segt((ind << 1) & 1, m + 1, h, i, v));
 }
 
-int find_max_edge(int root, int x){
-  int max_edge = 0;
-  while(!is_ascentor(lhd[x], root)) {
-    max_edge = max(max_edge, max(max_edge_to_lhd_root[x], cost[parent_edge[lhd[x]]]));
-    //printf("%d %d\n", parent_edge[lhd[x]], cost[parent_edge[lhd[x]]]);
-    x = parent[lhd[x]];
+int query_up(int as, int ds){
+  int ret(0);
+  while (lhd_no[as] == lhd_no[ds]){
+    int root = lhd_root[lhd_no[ds]];
+    ret = std::max(ret, query_segt(0, 0, segt_size - 1, segt_ind[root], segt_ind[ds]));
+    ds = par[root][0];
   }
-  while (x != root) {
-    max_edge = max(max_edge, cost[parent_edge[x]]);
-    x = parent[x];
-  }
-  return max_edge;
-}
-
-void build_lca(){
-  parent[root] = root;
-  for(int i = 1; i <= n; i++)
-    parent_lca[i][0] = parent[i];
-  for(int j = 1; j < HMAX; j++)
-    for(int i = 1; i <= n; i++)
-      parent_lca[i][j] = parent_lca[parent_lca[i][j - 1]][j - 1];
-}
-
-int lca(int x, int y) {
-  if (is_ascentor(x, y))
-    return x;
-  for (int i = HMAX - 1; i >= 0; i--){
-    if (!is_ascentor(parent_lca[x][i], y))
-      x = parent_lca[x][i];
-  }
-  return parent[x];
-}
-
-void solve(){
-  scanf("%d", &n);
-  next_adj = vector<int>((n - 1) * 2);
-  start = vector<int>(n + 1, -1);
-  cost = vector<int>((n - 1) * 2);
-  edge = vector<pair<pair<int, int>, pair<int, int> > >(n);
-  adj.clear();
-  adj.reserve((n - 1) * 2);
-
-  //enter
-  for(int i = 1; i < n;i ++){
-    int a, b, c;
-    scanf("%d%d%d", &a, &b, &c);
-//set vertexes for edge
-    edge[i].first.first = a;
-    edge[i].first.second = b;
-    add_edge(a, b, c);
-    edge[i].second.first = adj.size() - 1;
-    add_edge(b, a, c);
-    edge[i].second.second = adj.size() - 1;
-  }
-
-  build_hld();
-  build_lca();
-
-  //query
-  char s[10];
-  s[0] = 0;
-  while(s[0] != 'D'){
-    scanf("%s", s);
-    int x, y, k, c, edge1, edge2, lca_node;
-    switch (s[0]) {
-      case 'Q':
-        //query
-        scanf("%d%d", &x, &y);
-        lca_node = lca(x, y);
-        //printf("lca = %d\n", lca_node);
-        printf("%d\n", max(find_max_edge(lca_node, x), find_max_edge(lca_node, y)));
-        break;
-      case 'C':
-        //change
-        scanf("%d%d", &k, &c);
-        x = edge[k].first.first;
-        y = edge[k].first.second;
-        edge1 = edge[k].second.first;
-        edge2 = edge[k].second.second;
-        //printf("%d %d\n", edge1, edge2);
-        cost[edge1] = c;
-        cost[edge2] = c;
-        if (lhd[x] == lhd[y]){
-          if (is_ascentor(x, y)){
-          update_lhd(x);
-          } else
-            update_lhd(y);
-        }
-        break;
-    }
-  }
+  return std::max(ret, query_segt(0, 0, segt_size - 1, segt_ind[as] + 1, segt_ind[ds]));
 }
 
 int main(){
   int ntest;
   scanf("%d", &ntest);
   while(ntest--){
-    solve();
+    //init
+    segt_size = 0;
+    lhd_cnt = 0;
+    lhd_no[0] = 0;
+    std::fill(lhd_root, lhd_root + H, -1);
+
+    //enter
+    scanf("%d", &n);
+    std::fill(gstart, gstart + n, -1);
+    for(int i = 0; i < n - 1; i++){
+      int u, v, cost;
+      scanf("%d%d%d", &u, &v, &cost);
+      u--; v--;
+      gnext[i << 1] = gstart[u];
+      gstart[u] = i << 1;
+      gnext[(i << 1) | 1] = gstart[v];
+      gstart[v] = (i << 1) | 1;
+      costs[i] = cost;
+    }
+    par[0][0] = 1;
+    dfs(0, 0, 0);
+    lhd(0);
+    make_segt(1, 0, segt_size - 1);
+
+    //lca
+    for(int i = 1; i < H; i++)
+      for(int j = 1; j < n; j++)
+        par[j][i] = par[par[j][i - 1]][i - 1];
+
+    //query
+    char str[10];
+    int u, v, k, c, lca_node;
+    do {
+      scanf("%s", str);
+      switch(str[0]) {
+        case 'Q':
+          scanf("%d%d", &u, &v);u--;v--;
+          lca_node = lca(u, v);
+          printf("%d\n", std::max(query_up(lca_node, u), query_up(lca_node, v)));
+          break;
+        case 'C':
+          scanf("%d%d", &k, &c);
+          upd_segt(0, 0, segt_size - 1, low_end[k - 1], c);
+          break;
+      }
+    } while (str[0] != 'D');
   }
-  return 0;
 }
