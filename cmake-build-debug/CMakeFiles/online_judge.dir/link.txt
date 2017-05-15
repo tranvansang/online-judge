@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/online_judge.dir/qtree/qtree.cc.o  -o online_judge 

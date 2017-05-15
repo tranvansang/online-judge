@@ -6,6 +6,9 @@ qtree: qtree.cc
 qtree-sol: qtree-sol.cc
 	g++ qtree-sol.cc -o qtree-sol
 
+gen: gen.cc
+	g++ gen.cc -o gen
+
 .PHONY: test
 test:
 	cp 1.inp input
@@ -44,7 +47,18 @@ test:
 	./qtree <input >output
 	./qtree-sol <input >solution
 	diff output solution
+	cp 27.inp input
+	./qtree <input >output
+	./qtree-sol <input >solution
+	diff output solution
 
 .PHONY: run
 run: qtree
 	./qtree <input >output
+
+.PHONY: gen-and-test
+gen-and-test: gen qtree qtree-sol
+	./gen >input
+	./qtree <input >output
+	./qtree-sol <input >solution
+	diff output solution
