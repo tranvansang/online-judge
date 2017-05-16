@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/online_judge.dir/qtree/qtree.cc.o"
+  "CMakeFiles/online_judge.dir/qtree2/qtree2.cc.o"
   "online_judge.pdb"
   "online_judge"
 )

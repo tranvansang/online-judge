@@ -3,3 +3,5 @@
 
 CMakeFiles/online_judge.dir/qtree/qtree.cc.o: ../qtree/qtree.cc
 
+CMakeFiles/online_judge.dir/qtree2/qtree2.cc.o: ../qtree2/qtree2.cc
+

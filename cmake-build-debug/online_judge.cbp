@@ -37,8 +37,8 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="online_judge">
-				<Option output="/home/tansei/online-judge/cmake-build-debug/online_judge" prefix_auto="0" extension_auto="0"/>
+			<Target title="qtree-gen">
+				<Option output="/home/tansei/online-judge/cmake-build-debug/qtree-gen" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/tansei/online-judge/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -54,14 +54,14 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 online_judge"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 qtree-gen"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="online_judge/fast">
-				<Option output="/home/tansei/online-judge/cmake-build-debug/online_judge" prefix_auto="0" extension_auto="0"/>
+			<Target title="qtree-gen/fast">
+				<Option output="/home/tansei/online-judge/cmake-build-debug/qtree-gen" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/tansei/online-judge/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -77,15 +77,162 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 online_judge/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 qtree-gen/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="qtree2">
+				<Option output="/home/tansei/online-judge/cmake-build-debug/qtree2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tansei/online-judge/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 qtree2"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="qtree2/fast">
+				<Option output="/home/tansei/online-judge/cmake-build-debug/qtree2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tansei/online-judge/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 qtree2/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="qtree-sol">
+				<Option output="/home/tansei/online-judge/cmake-build-debug/qtree-sol" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tansei/online-judge/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 qtree-sol"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="qtree-sol/fast">
+				<Option output="/home/tansei/online-judge/cmake-build-debug/qtree-sol" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tansei/online-judge/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 qtree-sol/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="qtree">
+				<Option output="/home/tansei/online-judge/cmake-build-debug/qtree" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tansei/online-judge/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 qtree"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="qtree/fast">
+				<Option output="/home/tansei/online-judge/cmake-build-debug/qtree" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tansei/online-judge/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 qtree/fast"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tansei/online-judge/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/tansei/online-judge/qtree/gen.cc">
+			<Option target="qtree-gen"/>
+		</Unit>
+		<Unit filename="/home/tansei/online-judge/qtree/qtree-sol.cc">
+			<Option target="qtree-sol"/>
+		</Unit>
 		<Unit filename="/home/tansei/online-judge/qtree/qtree.cc">
-			<Option target="online_judge"/>
+			<Option target="qtree"/>
+		</Unit>
+		<Unit filename="/home/tansei/online-judge/qtree2/qtree2.cc">
+			<Option target="qtree2"/>
 		</Unit>
 		<Unit filename="/home/tansei/online-judge/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

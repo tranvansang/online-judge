@@ -111,17 +111,110 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named online_judge
+# Target rules for targets named qtree-gen
 
 # Build rule for target.
-online_judge: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 online_judge
-.PHONY : online_judge
+qtree-gen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 qtree-gen
+.PHONY : qtree-gen
 
 # fast build rule for target.
-online_judge/fast:
-	$(MAKE) -f CMakeFiles/online_judge.dir/build.make CMakeFiles/online_judge.dir/build
-.PHONY : online_judge/fast
+qtree-gen/fast:
+	$(MAKE) -f CMakeFiles/qtree-gen.dir/build.make CMakeFiles/qtree-gen.dir/build
+.PHONY : qtree-gen/fast
+
+#=============================================================================
+# Target rules for targets named qtree2
+
+# Build rule for target.
+qtree2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 qtree2
+.PHONY : qtree2
+
+# fast build rule for target.
+qtree2/fast:
+	$(MAKE) -f CMakeFiles/qtree2.dir/build.make CMakeFiles/qtree2.dir/build
+.PHONY : qtree2/fast
+
+#=============================================================================
+# Target rules for targets named qtree-sol
+
+# Build rule for target.
+qtree-sol: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 qtree-sol
+.PHONY : qtree-sol
+
+# fast build rule for target.
+qtree-sol/fast:
+	$(MAKE) -f CMakeFiles/qtree-sol.dir/build.make CMakeFiles/qtree-sol.dir/build
+.PHONY : qtree-sol/fast
+
+#=============================================================================
+# Target rules for targets named qtree
+
+# Build rule for target.
+qtree: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 qtree
+.PHONY : qtree
+
+# fast build rule for target.
+qtree/fast:
+	$(MAKE) -f CMakeFiles/qtree.dir/build.make CMakeFiles/qtree.dir/build
+.PHONY : qtree/fast
+
+qtree/gen.o: qtree/gen.cc.o
+
+.PHONY : qtree/gen.o
+
+# target to build an object file
+qtree/gen.cc.o:
+	$(MAKE) -f CMakeFiles/qtree-gen.dir/build.make CMakeFiles/qtree-gen.dir/qtree/gen.cc.o
+.PHONY : qtree/gen.cc.o
+
+qtree/gen.i: qtree/gen.cc.i
+
+.PHONY : qtree/gen.i
+
+# target to preprocess a source file
+qtree/gen.cc.i:
+	$(MAKE) -f CMakeFiles/qtree-gen.dir/build.make CMakeFiles/qtree-gen.dir/qtree/gen.cc.i
+.PHONY : qtree/gen.cc.i
+
+qtree/gen.s: qtree/gen.cc.s
+
+.PHONY : qtree/gen.s
+
+# target to generate assembly for a file
+qtree/gen.cc.s:
+	$(MAKE) -f CMakeFiles/qtree-gen.dir/build.make CMakeFiles/qtree-gen.dir/qtree/gen.cc.s
+.PHONY : qtree/gen.cc.s
+
+qtree/qtree-sol.o: qtree/qtree-sol.cc.o
+
+.PHONY : qtree/qtree-sol.o
+
+# target to build an object file
+qtree/qtree-sol.cc.o:
+	$(MAKE) -f CMakeFiles/qtree-sol.dir/build.make CMakeFiles/qtree-sol.dir/qtree/qtree-sol.cc.o
+.PHONY : qtree/qtree-sol.cc.o
+
+qtree/qtree-sol.i: qtree/qtree-sol.cc.i
+
+.PHONY : qtree/qtree-sol.i
+
+# target to preprocess a source file
+qtree/qtree-sol.cc.i:
+	$(MAKE) -f CMakeFiles/qtree-sol.dir/build.make CMakeFiles/qtree-sol.dir/qtree/qtree-sol.cc.i
+.PHONY : qtree/qtree-sol.cc.i
+
+qtree/qtree-sol.s: qtree/qtree-sol.cc.s
+
+.PHONY : qtree/qtree-sol.s
+
+# target to generate assembly for a file
+qtree/qtree-sol.cc.s:
+	$(MAKE) -f CMakeFiles/qtree-sol.dir/build.make CMakeFiles/qtree-sol.dir/qtree/qtree-sol.cc.s
+.PHONY : qtree/qtree-sol.cc.s
 
 qtree/qtree.o: qtree/qtree.cc.o
 
@@ -129,7 +222,7 @@ qtree/qtree.o: qtree/qtree.cc.o
 
 # target to build an object file
 qtree/qtree.cc.o:
-	$(MAKE) -f CMakeFiles/online_judge.dir/build.make CMakeFiles/online_judge.dir/qtree/qtree.cc.o
+	$(MAKE) -f CMakeFiles/qtree.dir/build.make CMakeFiles/qtree.dir/qtree/qtree.cc.o
 .PHONY : qtree/qtree.cc.o
 
 qtree/qtree.i: qtree/qtree.cc.i
@@ -138,7 +231,7 @@ qtree/qtree.i: qtree/qtree.cc.i
 
 # target to preprocess a source file
 qtree/qtree.cc.i:
-	$(MAKE) -f CMakeFiles/online_judge.dir/build.make CMakeFiles/online_judge.dir/qtree/qtree.cc.i
+	$(MAKE) -f CMakeFiles/qtree.dir/build.make CMakeFiles/qtree.dir/qtree/qtree.cc.i
 .PHONY : qtree/qtree.cc.i
 
 qtree/qtree.s: qtree/qtree.cc.s
@@ -147,8 +240,35 @@ qtree/qtree.s: qtree/qtree.cc.s
 
 # target to generate assembly for a file
 qtree/qtree.cc.s:
-	$(MAKE) -f CMakeFiles/online_judge.dir/build.make CMakeFiles/online_judge.dir/qtree/qtree.cc.s
+	$(MAKE) -f CMakeFiles/qtree.dir/build.make CMakeFiles/qtree.dir/qtree/qtree.cc.s
 .PHONY : qtree/qtree.cc.s
+
+qtree2/qtree2.o: qtree2/qtree2.cc.o
+
+.PHONY : qtree2/qtree2.o
+
+# target to build an object file
+qtree2/qtree2.cc.o:
+	$(MAKE) -f CMakeFiles/qtree2.dir/build.make CMakeFiles/qtree2.dir/qtree2/qtree2.cc.o
+.PHONY : qtree2/qtree2.cc.o
+
+qtree2/qtree2.i: qtree2/qtree2.cc.i
+
+.PHONY : qtree2/qtree2.i
+
+# target to preprocess a source file
+qtree2/qtree2.cc.i:
+	$(MAKE) -f CMakeFiles/qtree2.dir/build.make CMakeFiles/qtree2.dir/qtree2/qtree2.cc.i
+.PHONY : qtree2/qtree2.cc.i
+
+qtree2/qtree2.s: qtree2/qtree2.cc.s
+
+.PHONY : qtree2/qtree2.s
+
+# target to generate assembly for a file
+qtree2/qtree2.cc.s:
+	$(MAKE) -f CMakeFiles/qtree2.dir/build.make CMakeFiles/qtree2.dir/qtree2/qtree2.cc.s
+.PHONY : qtree2/qtree2.cc.s
 
 # Help Target
 help:
@@ -158,10 +278,22 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... online_judge"
+	@echo "... qtree-gen"
+	@echo "... qtree2"
+	@echo "... qtree-sol"
+	@echo "... qtree"
+	@echo "... qtree/gen.o"
+	@echo "... qtree/gen.i"
+	@echo "... qtree/gen.s"
+	@echo "... qtree/qtree-sol.o"
+	@echo "... qtree/qtree-sol.i"
+	@echo "... qtree/qtree-sol.s"
 	@echo "... qtree/qtree.o"
 	@echo "... qtree/qtree.i"
 	@echo "... qtree/qtree.s"
+	@echo "... qtree2/qtree2.o"
+	@echo "... qtree2/qtree2.i"
+	@echo "... qtree2/qtree2.s"
 .PHONY : help
 
 

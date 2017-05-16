@@ -44,5 +44,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/online_judge.dir/DependInfo.cmake"
+  "CMakeFiles/qtree-gen.dir/DependInfo.cmake"
+  "CMakeFiles/qtree2.dir/DependInfo.cmake"
+  "CMakeFiles/qtree-sol.dir/DependInfo.cmake"
+  "CMakeFiles/qtree.dir/DependInfo.cmake"
   )
