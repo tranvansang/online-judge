@@ -33,16 +33,24 @@ void addEdge(int a, int b, int s) {
 	m++;
 }
 
-bool dfs(int x) {
-	visited[x] = true;
-	if (x == 0) return true;
-	for(int k = start[x]; k!= -1; k = nxt[k]) {
-		int y = adj[k];
-		if (!visited[y]) {
-			int cost = c[k];
-			if (cost > 0 ? cost > f[k] : f[k]) {
-				trace[y] = k;
-				if (dfs(y)) return true;
+bool bfs(int init) {
+	queue<int> q;
+	q.push(init);
+	visited[init] = true;
+
+	while (!q.empty()) {
+		int x = q.front();
+		q.pop();
+		if (x == 0) return true;
+		for(int k = start[x]; k!= -1; k = nxt[k]) {
+			int y = adj[k];
+			if (!visited[y]) {
+				int cost = c[k];
+				if (cost > 0 ? cost > f[k] : f[k]) {
+					trace[y] = k;
+					visited[y] = true;
+					q.push(y);
+				}
 			}
 		}
 	}
@@ -65,7 +73,7 @@ int main(){
 
 	fill_n(f, m, 0);
 	fill_n(visited, n, false);
-	while (dfs(n - 1)) {
+	while (bfs(n - 1)) {
 		int minCost = -1;
 		for (int y = 0; y != n - 1; y = v[trace[y]]) {
 			int k = trace[y];
