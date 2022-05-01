@@ -14,3 +14,5 @@ add_executable(ads ads/main.cpp)
 add_executable(assign1 assign1/main.cpp)
 
 add_executable(baove baove/main.cpp)
+
+add_executable(track track/main.cpp)
