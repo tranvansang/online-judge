@@ -46,8 +46,8 @@ int main(){
 		mid = (l + h) / 2;
 
 		bool possible = true;
+		fill_n(match, n, -1);
 		rep(i, n) {
-			fill_n(match, n, -1);
 			fill_n(visited, n, false);
 			if (!dfs(i)) {
 				possible = false;
