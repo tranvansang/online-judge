@@ -12,3 +12,5 @@ add_executable(qtree2 qtree2/qtree2.cc)
 add_executable(ads ads/main.cpp)
 
 add_executable(assign1 assign1/main.cpp)
+
+add_executable(baove baove/main.cpp)
