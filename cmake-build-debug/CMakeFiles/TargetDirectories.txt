@@ -1,6 +1,0 @@
-/home/tansei/online-judge/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/tansei/online-judge/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/tansei/online-judge/cmake-build-debug/CMakeFiles/qtree-gen.dir
-/home/tansei/online-judge/cmake-build-debug/CMakeFiles/qtree2.dir
-/home/tansei/online-judge/cmake-build-debug/CMakeFiles/qtree-sol.dir
-/home/tansei/online-judge/cmake-build-debug/CMakeFiles/qtree.dir

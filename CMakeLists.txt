@@ -8,3 +8,5 @@ add_executable(qtree-sol qtree/qtree-sol.cc)
 add_executable(qtree-gen qtree/gen.cc)
 
 add_executable(qtree2 qtree2/qtree2.cc)
+
+add_executable(ads ads/main.cpp)

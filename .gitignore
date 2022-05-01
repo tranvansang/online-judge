@@ -29,5 +29,6 @@ tags
 
 # Executables
 *.exe
-*.out
+a.out
 *.app
+
