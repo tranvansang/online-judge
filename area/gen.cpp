@@ -13,10 +13,10 @@ using namespace std;
 #define trav(it, x) for(auto it = (x).begin(); it != (x).end(); it++)
 #define ll long long
 
-//#define MAX_N 10000
-//#define MAX_VAL 30000
-#define MAX_N 100
-#define MAX_VAL 1000
+#define MAX_N 10000
+#define MAX_VAL 30000
+//#define MAX_N 100
+//#define MAX_VAL 1000
 
 void doSort(int& x, int& y) {
 	if (x > y) {

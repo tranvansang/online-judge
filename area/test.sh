@@ -11,6 +11,9 @@ for ((i=0;i<100;i++)); do
 #  echo "${ans}"
   if [[ ${out} != ${ans} ]]; then
     echo "${i}: failed"
+    echo "out: ${out}"
+    echo "ans: ${ans}"
+    echo "${inp}" > gen.inp
     break
   else
     echo "${i}: ok"

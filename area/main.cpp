@@ -22,7 +22,7 @@ typedef struct {
 
 int n;
 vector<Line> lines;
-int cnt[MAX_VAL * 4], cover[MAX_VAL * 4];
+int cnt[MAX_VAL * 8], cover[MAX_VAL * 8];
 
 bool before(Line l1, Line l2) {
 	return l1.x == l2.x ? l1.open > l2.open : l1.x < l2.x;
