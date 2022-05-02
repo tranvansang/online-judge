@@ -7,12 +7,16 @@ interface IDateTime {
 	time: ITime
 }
 
+enum RoomCategory {
+	low,
+	high,
+}
+
 interface IRoom {
 	id: IRoomId
-	lowCapacity?: number
-	lowPrice?: number
-	highCapacity?: number
-	highPrice?: number
+	capacity: number
+	price: number
+	category: RoomCategory
 
 	// at most one of these two is set
 	cleanStartedAt?: IDateTime
@@ -63,7 +67,7 @@ const checkIn = (
 		return
 	}
 
-	if (occupation > (room.lowCapacity ?? 0) + (room.highCapacity ?? 0)) {
+	if (occupation > room.capacity) {
 		console.log(`${prefix}ERROR: ${roomId} cannot accommodate ${customerId}.`)
 		return
 	}
@@ -86,12 +90,12 @@ const checkIn = (
 }
 
 const isHoliday = (date: number) => [5, 6].includes((date - 1) % 7)
-const calculateTotal = (room: IRoom, checkInAt: IDateTime, occupation: number, nDays: number) => {
-	const lowOccupation = room.lowCapacity !== undefined ? Math.min(room.lowCapacity, occupation) : 0
-	const highOccupation = room.highCapacity !== undefined ? occupation - lowOccupation : 0
-	const perDay = (room.lowPrice ?? 0) * lowOccupation + (room.highPrice ?? 0) * highOccupation
-	return [...Array(nDays)].reduce((acc, _, i) => acc + perDay * (isHoliday(checkInAt.date + 1 + i) ? 1.5 : 1), 0)
-}
+const calculateTotal = (
+	room: IRoom,
+	checkInAt: IDateTime,
+	occupation: number,
+	nDays: number
+) => [...Array(nDays)].reduce((acc, _, i) => acc + room.price * (isHoliday(checkInAt.date + 1 + i) ? 1.5 : 1), 0)
 
 const waitingMessages: {
 	dateTime: IDateTime
@@ -175,19 +179,12 @@ const main = async () => {
 
 	// room information
 	for (const line of lines.slice(1, 1 + nRooms)) {
-		const [id, category, occupation, price] = line.split(' ')
-		const room = roomById[id] ??= {id}
-		switch (category) {
-			case 'LOW':
-				room.lowCapacity = +occupation
-				room.lowPrice = +price
-				break
-			case 'HIGH':
-				room.highCapacity = +occupation
-				room.highPrice = +price
-				break
-			default:
-				throw new Error(`Unknown room category: ${category}`)
+		const [id, category, capacity, price] = line.split(' ')
+		roomById[id] = {
+			id,
+			category: category === 'LOW' ? RoomCategory.low : RoomCategory.high,
+			capacity: +capacity,
+			price: +price,
 		}
 	}
 
