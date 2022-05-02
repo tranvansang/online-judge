@@ -289,7 +289,7 @@ const main = async () => {
 				throw new Error(`Unknown code: ${code}`)
 		}
 	}
-	if (cleaningEvents.length) checkCleaningEvents(cleaningEvents[cleaningEvents.length - 1].dateTime.date, cleaningEvents[cleaningEvents.length - 1].dateTime.time)
+	while (cleaningEvents.length) checkCleaningEvents(cleaningEvents[cleaningEvents.length - 1].dateTime.date, cleaningEvents[cleaningEvents.length - 1].dateTime.time)
 }
 
 main()
