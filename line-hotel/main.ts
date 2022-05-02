@@ -18,9 +18,12 @@ interface IRoom {
 	price: number
 	category: RoomCategory
 
-	// at most one of these two is set
-	cleanStartedAt?: IDateTime
-	checkedInAt?: IDateTime
+	// at most one of these three is set
+	checkedInAt?: IDateTime // checked in, not checked out
+	checkedOutAt?: IDateTime // checked out, WAITING for cleaning
+	cleanStartedAt?: IDateTime // cleaning started, not finished
+	// if all 3 are undefined, the room is free
+
 	occupation?: number
 	nDays?: number
 }
@@ -72,8 +75,8 @@ const checkIn = (
 		return
 	}
 
-	if (room.cleanStartedAt) {
-		`${prefix}ERROR: ${roomId} is being cleaned.`
+	if (room.checkedOutAt || room.cleanStartedAt) {
+		console.log(`${prefix}ERROR: ${roomId} is being cleaned.`)
 		return
 	}
 
@@ -103,11 +106,27 @@ const cleaningEvents: {
 	room: IRoom
 }[] = []
 
+const scheduleCleaningEvent = (
+	date: number,
+	time: ITime,
+	room: IRoom
+) => {
+	room.cleanStartedAt = {date, time}
+	console.log(`${outputPrefix(date, time)}A cleaner is assigned to ${room.id}.`)
+	const cleanedDateTime = addTime({date, time}, 30)
+	cleaningEvents.push({
+		message: `${outputPrefix(cleanedDateTime.date, cleanedDateTime.time)}${room.id} has been cleaned.`,
+		dateTime: cleanedDateTime,
+		room,
+	})
+}
+
 const checkOut = (
 	date: number,
 	time: ITime,
 	customerId: ICustomerId,
 	roomId: IRoomId,
+	nStaffs: number,
 ) => {
 	const prefix = outputPrefix(date, time)
 
@@ -133,16 +152,13 @@ const checkOut = (
 
 	delete customerOccupiedRoom[customerId]
 	delete room.checkedInAt
-	room.cleanStartedAt = {date, time}
-	console.log(`${prefix}A cleaner is assigned to ${roomId}.`)
+	if (cleaningEvents.length === nStaffs) {
+		room.checkedOutAt = {date, time}
+		console.log(`${prefix}No cleaner is available.`)
+		return
+	}
 
-	const cleanedDateTime = addTime({date, time}, 30)
-	cleaningEvents.push({
-		message: `${outputPrefix(cleanedDateTime.date, cleanedDateTime.time)}${roomId} has been cleaned.`,
-		dateTime: cleanedDateTime,
-		room,
-	})
-	// console.log(`${prefix}No cleaner is available.`)
+	scheduleCleaningEvent(date, time, room)
 }
 
 const checkStatus = (
@@ -160,11 +176,21 @@ const sales = (
 }
 
 const checkCleaningEvents = (date: number, time: ITime) => {
-	const toShow = cleaningEvents.filter(({dateTime}) => dateTime.date < date || dateTime.date === date && dateTime.time <= time)
-	cleaningEvents.splice(0, toShow.length)
-	for (const {message, room} of toShow) {
+	const toFinish = cleaningEvents.filter(({dateTime}) => dateTime.date < date || dateTime.date === date && dateTime.time <= time)
+	cleaningEvents.splice(0, toFinish.length)
+	for (const {message, room, dateTime} of toFinish) {
 		delete room.cleanStartedAt
 		console.log(message)
+
+		const waitingForCleaningRooms = Object.values(roomById).filter(room => room.checkedOutAt).sort((a, b) => {
+			if (a.category !== b.category) return a.category === RoomCategory.high ? -1 : 1
+			if (a.checkedOutAt!.date !== b.checkedOutAt!.date) return a.checkedOutAt!.date - b.checkedOutAt!.date
+			return a.checkedOutAt!.time - b.checkedOutAt!.time
+		})
+		for (const room of waitingForCleaningRooms.slice(0, 1)) {
+			delete room.checkedOutAt
+			scheduleCleaningEvent(dateTime.date, dateTime.time, room)
+		}
 	}
 }
 
@@ -208,7 +234,7 @@ const main = async () => {
 				break
 			case 'check-out': {
 				const [customerId, roomId] = request
-				checkOut(date, time, customerId, roomId)
+				checkOut(date, time, customerId, roomId, nStaffs)
 			}
 				break
 			case 'status':
