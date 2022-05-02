@@ -97,9 +97,10 @@ const calculateTotal = (
 	nDays: number
 ) => [...Array(nDays)].reduce((acc, _, i) => acc + room.price * (isHoliday(checkInAt.date + 1 + i) ? 1.5 : 1), 0)
 
-const waitingMessages: {
+const cleaningEvents: {
 	dateTime: IDateTime
 	message: string
+	room: IRoom
 }[] = []
 
 const checkOut = (
@@ -131,12 +132,15 @@ const checkOut = (
 	console.log(`${prefix}${customerId} has to pay ${total} to leave ${roomId}.`)
 
 	delete customerOccupiedRoom[customerId]
+	delete room.checkedInAt
+	room.cleanStartedAt = {date, time}
 	console.log(`${prefix}A cleaner is assigned to ${roomId}.`)
 
 	const cleanedDateTime = addTime({date, time}, 30)
-	waitingMessages.push({
+	cleaningEvents.push({
 		message: `${outputPrefix(cleanedDateTime.date, cleanedDateTime.time)}${roomId} has been cleaned.`,
 		dateTime: cleanedDateTime,
+		room,
 	})
 	// console.log(`${prefix}No cleaner is available.`)
 }
@@ -155,10 +159,11 @@ const sales = (
 	throw new Error('Not implemented')
 }
 
-const showWaitingMessages = (date: number, time: ITime) => {
-	const toShow = waitingMessages.filter(({dateTime}) => dateTime.date < date || dateTime.date === date && dateTime.time <= time)
-	waitingMessages.splice(0, toShow.length)
-	for (const {message} of toShow) {
+const checkCleaningEvents = (date: number, time: ITime) => {
+	const toShow = cleaningEvents.filter(({dateTime}) => dateTime.date < date || dateTime.date === date && dateTime.time <= time)
+	cleaningEvents.splice(0, toShow.length)
+	for (const {message, room} of toShow) {
+		delete room.cleanStartedAt
 		console.log(message)
 	}
 }
@@ -194,7 +199,7 @@ const main = async () => {
 		const [dateStr, timeStr, code, ...request] = line.split(' ')
 		const date = +dateStr
 		const time = timeFromStr(timeStr)
-		showWaitingMessages(date, time)
+		checkCleaningEvents(date, time)
 		switch (code) {
 			case 'check-in': {
 				const [customerId, roomId, capacityStr, nDaysStr] = request
@@ -216,10 +221,7 @@ const main = async () => {
 				throw new Error(`Unknown code: ${code}`)
 		}
 	}
-	for (const {message} of waitingMessages) {
-		console.log(message)
-	}
-	waitingMessages.length = 0
+	if (cleaningEvents.length) checkCleaningEvents(cleaningEvents[cleaningEvents.length - 1].dateTime.date, cleaningEvents[cleaningEvents.length - 1].dateTime.time)
 }
 
 main()
