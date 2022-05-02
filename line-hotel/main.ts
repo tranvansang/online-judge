@@ -28,9 +28,19 @@ interface IRoom {
 	nDays?: number
 }
 
+const paidEvents: {
+	dateTime: IDateTime
+	amount: number
+}[] = []
+
 const roomById: Record<IRoomId, IRoom> = {}
 const customerOccupiedRoom: Record<ICustomerId, IRoom> = {}
 const allCustomerIds = new Set<ICustomerId>()
+
+const compareDateTime = (a: IDateTime, b: IDateTime) => {
+	if (a.date !== b.date) return a.date - b.date
+	return a.time - b.time
+}
 
 // minutes from start of the day
 const timeFromStr = (str: string) => {
@@ -149,6 +159,10 @@ const checkOut = (
 	// note: customer may checkout earlier than requested
 	const total = calculateTotal(room, room.checkedInAt!, room.occupation!, room.nDays!)
 	console.log(`${prefix}${customerId} has to pay ${total} to leave ${roomId}.`)
+	paidEvents.push({
+		dateTime: {date, time},
+		amount: total,
+	})
 
 	delete customerOccupiedRoom[customerId]
 	delete room.checkedInAt
@@ -165,18 +179,34 @@ const checkStatus = (
 	date: number,
 	time: ITime,
 ) => {
-	throw new Error('Not implemented')
+	let vacantRooms = 0
+	let occupiedRooms = 0
+	let cleaningRooms = 0
+	for (const room of Object.values(roomById)) {
+		if (room.checkedInAt) occupiedRooms++
+		else if (room.cleanStartedAt || room.checkedOutAt) cleaningRooms++
+		else vacantRooms++
+	}
+	console.log(`${outputPrefix(date, time)}Vacant: ${vacantRooms}, Cleaning in progress: ${cleaningRooms}, Occupied: ${occupiedRooms}`)
 }
 
 const sales = (
 	date: number,
 	time: ITime,
+	start: IDateTime,
+	end: IDateTime
 ) => {
-	throw new Error('Not implemented')
+	let total = 0
+	for (const {dateTime, amount} of paidEvents) {
+		if (compareDateTime(start, dateTime) <= 0 && compareDateTime(dateTime, end) < 0) {
+			total += amount
+		}
+	}
+	console.log(`${outputPrefix(date, time)}Sales: ${total}`)
 }
 
 const checkCleaningEvents = (date: number, time: ITime) => {
-	const toFinish = cleaningEvents.filter(({dateTime}) => dateTime.date < date || dateTime.date === date && dateTime.time <= time)
+	const toFinish = cleaningEvents.filter(({dateTime}) => compareDateTime(dateTime, {date, time}) <= 0)
 	cleaningEvents.splice(0, toFinish.length)
 	for (const {message, room, dateTime} of toFinish) {
 		delete room.cleanStartedAt
@@ -241,7 +271,19 @@ const main = async () => {
 				checkStatus(date, time)
 				break
 			case 'sales':
-				sales(date, time)
+				const [startDate, startTime, endDate, endTime] = request
+				sales(
+					date,
+					time,
+					{
+						date: +startDate,
+						time: timeFromStr(startTime)
+					},
+					{
+						date: +endDate,
+						time: timeFromStr(endTime)
+					}
+				)
 				break
 			default:
 				throw new Error(`Unknown code: ${code}`)
