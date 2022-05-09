@@ -19,6 +19,8 @@ using namespace std;
 #define NMAX 50000
 #define VMAX 15000
 
+int maxVal = VMAX * NMAX;
+
 int a[NMAX + 1], s[NMAX + 1];
 int maxIt[NMAX * 8], minIt[NMAX * 8], allIt[NMAX * 8];
 #define getMin get<0>
@@ -29,7 +31,7 @@ void build(int idx, int l, int h) {
 	if (l > h) return;
 	if (l == h) {
 		maxIt[idx] = minIt[idx] = s[h];
-		allIt[idx] = 0;
+		allIt[idx] = -maxVal;
 		return;
 	}
 	build(Left(idx), l, Mid(l, h));
@@ -40,7 +42,7 @@ void build(int idx, int l, int h) {
 }
 
 tuple<int, int, int> query(int idx, int l, int h, int x, int y) {
-	if (x > h || y < l) return make_tuple(VMAX * NMAX, -VMAX * NMAX, 0);
+	if (x > h || y < l) return make_tuple(maxVal, -maxVal, -maxVal);
 	if (x <= l && h <= y) return make_tuple(minIt[idx], maxIt[idx], allIt[idx]);
 	auto left = query(Left(idx), l, Mid(l, h), x, y);
 	auto right = query(Right(idx), Mid(l, h) + 1, h, x, y);
@@ -49,7 +51,7 @@ tuple<int, int, int> query(int idx, int l, int h, int x, int y) {
 		max(getMax(left), getMax(right)),
 		max(
 			max(getAll(left), getAll(right)),
-			Mid(l, h) >= x && Mid(l, h) + 1 <= y ? getMax(right) - getMin(left) : 0
+			Mid(l, h) >= x && Mid(l, h) + 1 <= y ? getMax(right) - getMin(left) : -maxVal
 		)
 	);
 }
@@ -69,7 +71,7 @@ int main(){
 	rep(i, m) {
 		int x, y; cin >> x >> y;
 		x--; y--;
-		cout << max(getAll(query(1, 0, n, x, y + 1)), 0) << endl;
+		cout << getAll(query(1, 0, n, x, y + 1)) << endl;
 	}
 
 	return 0;
