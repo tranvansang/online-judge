@@ -18,3 +18,5 @@ add_executable(baove baove/main.cpp)
 add_executable(track track/main.cpp)
 
 add_executable(qmax qmax/main.cpp)
+
+add_executable(gss gss/main.cpp)
