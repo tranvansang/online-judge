@@ -15,5 +15,21 @@ using namespace std;
 
 int main() {
 	srand(time(NULL));
+	int n(5);
+	cout << n << endl;
+
+	int a[100];
+	rep(i, n) {
+		a[i] = rand() % 20 - 10;
+		cout << a[i] << " ";
+	}
+	cout << endl;
+
+	cout << n * (n - 1) / 2 << endl;
+	rep(i, n) {
+		For(j, i, n) {
+			cout << i << " " << j << endl;
+		}
+	}
 	return 0;
 }

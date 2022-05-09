@@ -69,7 +69,7 @@ int main(){
 	rep(i, m) {
 		int x, y; cin >> x >> y;
 		x--; y--;
-		cout << max(getAll(query(1, 0, n, x, y + 1)), 0);
+		cout << max(getAll(query(1, 0, n, x, y + 1)), 0) << endl;
 	}
 
 	return 0;
