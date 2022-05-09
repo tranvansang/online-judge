@@ -26,6 +26,8 @@ int maxIt[NMAX * 8], minIt[NMAX * 8], allIt[NMAX * 8];
 #define getMin get<0>
 #define getMax get<1>
 #define getAll get<2>
+map<PII, int> cache;
+map<PII, bool> hasCache;
 
 void build(int idx, int l, int h) {
 	if (l > h) return;
@@ -71,7 +73,13 @@ int main(){
 	rep(i, m) {
 		int x, y; cin >> x >> y;
 		x--; y--;
-		cout << getAll(query(1, 0, n, x, y + 1)) << endl;
+		if (hasCache[mp(x, y)]) cout << cache[mp(x, y)] << endl;
+		else {
+			int val = getAll(query(1, 0, n, x, y + 1));
+			cache[mp(x, y)] = val;
+			hasCache[mp(x, y)] = true;
+			cout << val << endl;
+		}
 	}
 
 	return 0;

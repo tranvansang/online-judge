@@ -17,21 +17,26 @@ using namespace std;
 
 int main() {
 	srand(time(NULL));
-	int n(100);
+	int n(50000);
 	cout << n << endl;
 
-	int a[101];
 	rep(i, n) {
-		a[i] = rand() % VMAX * 2 - VMAX;
-		cout << a[i] << " ";
+		cout << rand() % VMAX * 2 - VMAX << " ";
 	}
 	cout << endl;
 
-	cout << n * (n - 1) / 2 << endl;
-	rep(i, n) {
-		For(j, i, n) {
-			cout << i + 1 << " " << j + 1 << endl;
-		}
+	int m = 50000;
+//	cout << n * (n - 1) / 2 << endl;
+	cout << m << endl;
+	rep(i, m) {
+		int x = rand() % n + 1;
+		int y = rand() % (n - x + 1) + x;
+		cout << x << " " << y << endl;
 	}
+//	rep(i, n) {
+//		For(j, i, n) {
+//			cout << i + 1 << " " << j + 1 << endl;
+//		}
+//	}
 	return 0;
 }
