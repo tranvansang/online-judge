@@ -14,5 +14,7 @@ using namespace std;
 
 int main() {
 	srand(time(NULL));
+	cout << 10 << endl;
+	rep(i, 10) cout << rand() % 20 << " ";
 	return 0;
 }

@@ -24,7 +24,7 @@ int main(){
 		int l(0), h(f.size());
 		while(l < h) {
 			int m((l + h) / 2);
-			if (f[m] <= x) l = m + 1;
+			if (f[m] < x) l = m + 1;
 			else h = m;
 		}
 		if (l == f.size()) f.pb(x);
