@@ -20,3 +20,5 @@ add_executable(track track/main.cpp)
 add_executable(qmax qmax/main.cpp)
 
 add_executable(gss gss/main.cpp)
+
+add_executable(match2 match2/main.cpp)
