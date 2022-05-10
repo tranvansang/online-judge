@@ -12,21 +12,17 @@ using namespace std;
 #define trav(it,x) for(auto it = (x).begin(); it != (x).end(); it++)
 #define ll long long
 
-#define MAXN 200
-
-int c[MAXN][MAXN];
-int match[MAXN], fx[MAXN], fy[MAXN];
-bool visited[MAXN];
-int n;
+VI nxt, adj;
+int start[100], match[100];
+bool visited[100];
 
 bool dfs(int x) {
-	rep(y, n) {
-		if (c[x][y] == fx[x] - fy[y] && !visited[y]) {
-			visited[y] = true;
-			if (match[y] == -1 || dfs(match[y])) {
-				match[y] = x;
-				return true;
-			}
+	visited[x] = true;
+	for (int k = start[x]; k != -1; k = nxt[k]) {
+		int y = adj[k];
+		if (match[y] == -1 || !visited[match[y]] && dfs(match[y])) {
+			match[y] = x;
+			return true;
 		}
 	}
 	return false;
@@ -35,47 +31,27 @@ bool dfs(int x) {
 int main(){
 	ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	rep(i, n) {
-		rep(j, n) {
-			cin >> c[i][j];
-		}
+	int m, n; scanf("%d%d", &m, &n);
+	fill_n(start, m, -1);
+	int u, v;
+	while(scanf("%d%d", &u, &v) == 2) {
+		u--; v--;
+		nxt.pb(start[u]);
+		start[u] = nxt.size() - 1;
+		adj.pb(v);
 	}
+
 	fill_n(match, n, -1);
-	rep(i, n) {
-		while (true) {
-			fill_n(visited, n, false);
-			if (dfs(i)) break;
-			int val = -1;
-			For(j, -1, n) {
-				if (j == -1 || visited[j]) {
-					int x = j == -1 ? i : match[j];
-					rep(y, n) {
-						if (!visited[y]) {
-							if (val == -1 || val > c[x][y]) {
-								val = c[x][y];
-							}
-						}
-					}
-				}
-			}
-			For(j, -1, n) {
-				if (j == -1 || visited[j]) {
-					int x = j == -1 ? i : match[j];
-					fx[x] += val;
-				}
-			}
-			rep(y, n) {
-				if (visited[y]) {
-					fy[y] += val;
-				}
-			}
-		}
+	int cnt(0);
+	rep(i, m) {
+		fill_n(visited, m, false);
+		cnt += dfs(i);
 	}
-	int ret = 0;
+
+	cout << cnt << endl;
 	rep(i, n) {
-		if (c[match[i]][i] > ret) ret = c[match[i]][i];
+		if (match[i] != -1) cout << match[i] + 1 << " " << i + 1 << endl;
 	}
-	cout << ret;
+
 	return 0;
 }
