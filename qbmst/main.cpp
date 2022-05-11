@@ -23,21 +23,20 @@ int main(){
 		int u, v, c; cin >> u >> v >> c; u--; v--;
 		g[u].pb(mp(v, c)); g[v].pb(mp(u, c));
 	}
-	VI d(n, -1), etrace(n, 0);
+	VI d(n, -1);
 	map<II, bool> q;
 	d[0] = 0;
 	q[mp(d[0], 0)] = true;
 	int sum(0);
 	while(!q.empty()) {
 		int x(q.begin()->fi.se);
-		sum+=etrace[x];
+		sum+=d[x];
 		q.erase(mp(d[x], x));
 		for(auto e: g[x]) {
 			int y(e.fi), c(e.se);
-			if (d[y] == -1 || d[y] > d[x] + c) {
+			if (d[y] == -1 || d[y] > c) {
 				q.erase(mp(d[y], y));
-				d[y] = d[x] + c;
-				etrace[y] = c;
+				d[y] = c;
 				q[mp(d[y], y)] = true;
 			}
 		}
