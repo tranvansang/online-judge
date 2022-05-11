@@ -10,6 +10,11 @@ gen: gen.cpp
 	g++ gen.cpp
 	./a.out
 
+run:
+	g++ main.cpp
+	./a.out <0.inp
+	for ((i=0;i<10;i++)); do ./a.out <test/FLOYD.IN$$i >test/FLOYD.OU$$i; if ! diff test/FLOYD.IN$$i test/FLOYD.OU$$i; then echo "failed at $$i"; fi done
+
 test: gen.cpp ans.cpp main.cpp
 	mkdir -p build
 	g++ gen.cpp -o build/gen

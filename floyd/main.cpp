@@ -29,7 +29,7 @@ int main(){
 		VI d(n, -1), trace(n, -1);
 		map<II, bool> q;
 		d[u] = 0;
-		q[mp(0, 0)] = true;
+		q[mp(0, u)] = true;
 		while (!q.empty()) {
 			int x(q.begin()->fi.se);
 			q.erase(mp(d[x], x));
