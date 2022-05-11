@@ -24,17 +24,19 @@ int main(){
 		g[u].pb(mp(v, c)); g[v].pb(mp(u, c));
 	}
 	VI d(n, -1);
+	vector<bool> removed(n, false);
 	map<II, bool> q;
 	d[0] = 0;
 	q[mp(d[0], 0)] = true;
 	int sum(0);
 	while(!q.empty()) {
 		int x(q.begin()->fi.se);
+		removed[x] = true;
 		sum+=d[x];
 		q.erase(mp(d[x], x));
 		for(auto e: g[x]) {
 			int y(e.fi), c(e.se);
-			if (d[y] == -1 || d[y] > c) {
+			if (!removed[y] && (d[y] == -1 || d[y] > c)) {
 				q.erase(mp(d[y], y));
 				d[y] = c;
 				q[mp(d[y], y)] = true;
