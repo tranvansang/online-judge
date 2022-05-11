@@ -3,6 +3,8 @@ using namespace std;
 #define II pair<int,int>
 #define VI vector<int>
 #define VVI vector<VI>
+#define VII vector<II>
+#define VVII vector<VII>
 #define For(i,a,b) for(auto i = (a); i < (b); i++)
 #define rep(i,n) For(i,0,(n))
 #define fi first
