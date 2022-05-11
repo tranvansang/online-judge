@@ -10,7 +10,6 @@ using namespace std;
 #define mp make_pair
 #define pb push_back
 #define all(a) (a).begin(), (a).end()
-#define trav(it,x) for(auto it = (x).begin(); it != (x).end(); it++)
 #define ll long long
 
 VVI g;
@@ -21,17 +20,14 @@ void dfs(int x, int p) {
 	low[x] = num[x] = ++maxNum;
 	int nchild = 0;
 	bool isCutVertex(false);
-	trav(it, g[x]) {
-		int y = *it;
-		if (y != p) {
-			if (low[y]) low[x] = min(low[x], num[y]);
-			else {
-				nchild++;
-				dfs(y, x);
-				low[x] = min(low[x], low[y]);
-				if (low[y] > num[x]) cutEdgeCnt++;
-				if (low[y] >= num[x]) isCutVertex = true;
-			}
+	for (auto y: g[x]) if (y != p) {
+		if (low[y]) low[x] = min(low[x], num[y]);
+		else {
+			nchild++;
+			dfs(y, x);
+			low[x] = min(low[x], low[y]);
+			if (low[y] > num[x]) cutEdgeCnt++;
+			if (low[y] >= num[x]) isCutVertex = true;
 		}
 	}
 	if (p == -1 ? nchild > 1 : isCutVertex) cutVertexCnt++;
