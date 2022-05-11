@@ -2,7 +2,6 @@
 using namespace std;
 #define PII pair<int,int>
 #define VI vector<int>
-#define VVI vector<VI>
 #define For(i, a, b) for(auto i = (a); i < (b); i++)
 #define rep(i, n) For(i,0,(n))
 #define fi first
@@ -14,7 +13,6 @@ using namespace std;
 #define ll long long
 
 int main() {
-	ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-
+	srand(time(NULL));
 	return 0;
 }

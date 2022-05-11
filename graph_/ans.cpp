@@ -2,7 +2,6 @@
 using namespace std;
 #define PII pair<int,int>
 #define VI vector<int>
-#define VVI vector<VI>
 #define For(i, a, b) for(auto i = (a); i < (b); i++)
 #define rep(i, n) For(i,0,(n))
 #define fi first
