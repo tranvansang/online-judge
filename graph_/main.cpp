@@ -13,11 +13,11 @@ using namespace std;
 #define ll long long
 
 VVI g;
-int cutEdgeCnt, cutVertexCnt, maxNum;
+int cutEdgeCnt, cutVertexCnt, dfsClock;
 int low[10000], num[10000];
 
 void dfs(int x, int p) {
-	low[x] = num[x] = ++maxNum;
+	low[x] = num[x] = ++dfsClock;
 	int nchild = 0;
 	bool isCutVertex(false);
 	for (auto y: g[x]) if (y != p) {
@@ -26,7 +26,7 @@ void dfs(int x, int p) {
 			nchild++;
 			dfs(y, x);
 			low[x] = min(low[x], low[y]);
-			if (low[y] > num[x]) cutEdgeCnt++;
+			if (low[y] == num[y]) cutEdgeCnt++;
 			if (low[y] >= num[x]) isCutVertex = true;
 		}
 	}
