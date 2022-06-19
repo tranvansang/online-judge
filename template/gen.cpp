@@ -10,7 +10,9 @@ using namespace std;
 #define fi first
 #define se second
 #define mp make_pair
+#define mt make_tuple
 #define pb push_back
+#define eb emplace_back
 #define all(a) (a).begin(), (a).end()
 #define ll long long
 

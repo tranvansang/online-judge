@@ -10,12 +10,14 @@ using namespace std;
 #define fi first
 #define se second
 #define mp make_pair
+#define mt make_tuple
 #define pb push_back
+#define eb emplace_back
 #define all(a) (a).begin(), (a).end()
 #define ll long long
 
 int main() {
-	ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+	ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
 
 	return 0;
 }

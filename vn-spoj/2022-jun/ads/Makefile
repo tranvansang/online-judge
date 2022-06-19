@@ -18,8 +18,8 @@ test: gen.cpp ans.cpp main.cpp
 
 	for ((i=0;i<100;i++)); do \
 		inp=$$(./build/gen); \
-		out=$$(echo "$${inp}" | ./build/main); \
-		ans=$$(echo "$${inp}" | ./build/ans); \
+		out=$$(echo "$${inp}" | ./build/ans); \
+		ans=$$(echo "$${inp}" | ./build/main); \
 		if [[ $${out} != $${ans} ]]; then \
 			echo "$${i}: failed"; \
 			echo "out: $${out}"; \

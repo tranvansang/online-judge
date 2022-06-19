@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 project(online_judge)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 23)
 
 add_executable(qtree qtree/qtree.cc)
 add_executable(qtree-sol qtree/qtree-sol.cc)
