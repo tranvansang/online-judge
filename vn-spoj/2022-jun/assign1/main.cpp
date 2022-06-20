@@ -16,10 +16,50 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define ll long long
 
+#define MAXN 200
+VVI c;
+VI match;
+vector<bool> visited;
+int limit, n;
+
+bool dfs(int x) {
+	visited[x] = true;
+	rep(i, n) if (c[x][i] <= limit) {
+		if (match[i] == -1 || !visited[match[i]] && dfs(match[i])) {
+			match[i] = x;
+			return true;
+		}
+	}
+	return false;
+}
+
 int main(){
 	ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
 
-	cout << "hello";
+	cin >> n;
+	c = VVI(n, VI(n, 0));
+	set<int> val;
+	rep(i, n) rep(j, n) {
+		int x; cin >> x;
+		c[i][j] = x;
+		val.insert(x);
+	}
+	for(auto v: val) {
+		limit = v;
+		match = VI(n, -1);
+		bool possible = true;
+		rep(i, n) {
+			visited = vector<bool>(n, false);
+			if (!dfs(i)) {
+				possible = false;
+				break;
+			}
+		}
+		if (possible) {
+			cout << v;
+			break;
+		}
+	}
 
 	return 0;
 }

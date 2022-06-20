@@ -8,10 +8,17 @@ using namespace std;
 #define all(a) (a).begin(), (a).end()
 #define ll long long
 
-int main(){
-	ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
-
-	cout << "hello";
-
+int main() {
+	srand(time(nullptr));
+	int n(10);
+	cout << n << endl;
+	int m(10000);
+	int vmax(10);
+	while(m--) {
+		int x = rand() % n + 1;
+		int y = rand() % n + 1;
+		int c = rand() % vmax;
+		cout << x << " " << y << " " << c << endl;
+	}
 	return 0;
 }
